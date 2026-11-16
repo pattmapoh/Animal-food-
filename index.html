@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="th" data-vibe="pop">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PAW LABZ 🐾✨ ระบบคลังอาหารสัตว์ฉบับตัวแม่</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-vibe="pop"] {
+  --bg: #fdfbf7;
+  --bg-dot: #e5e0d5;
+  --card: #ffffff;
+  --ink: #16161a;
+  --mute: #6b6b7b;
+  --line: #16161a;
+  --soft-line: #e4e2dd;
+  --primary: #ff5c8a;
+  --primary-ink: #ffffff;
+  --lime: #c8f904;
+  --Purple: #8b5cf6;
+  --cyan: #00e5ff;
+  --gold: #ffbe0b;
+  --red: #ff3355;
+  --teal: #00d68f;
+  --pill-ok: #d8f8e8;
+  --pill-ok-ink: #046c4e;
+  --pill-wait: #fff3c4;
+  --pill-wait-ink: #92400e;
+  --pill-no: #ffe0e6;
+  --pill-no-ink: #b91c1c;
+  --side: #16161a;
+  --side-card: #24242c;
+  --side-ink: #f4f4f6;
+  --shadow: 4px 4px 0px #16161a;
+  --shadow-sm: 2px 2px 0px #16161a;
+  --shadow-lg: 6px 6px 0px #16161a;
+  --bw: 2px;
+}
+
+[data-vibe="cyber"] {
+  --bg: #0b0c10;
+  --bg-dot: #1f2230;
+  --card: #141622;
+  --ink: #f4f6ff;
+  --mute: #949ab1;
+  --line: #383e56;
+  --soft-line: #232738;
+  --primary: #b8ff01;
+  --primary-ink: #0b0c10;
+  --lime: #00f5d4;
+  --Purple: #a855f7;
+  --cyan: #38bdf8;
+  --gold: #facc15;
+  --red: #ff4d6d;
+  --teal: #00f5d4;
+  --pill-ok: #083b33;
+  --pill-ok-ink: #5eead4;
+  --pill-wait: #423006;
+  --pill-wait-ink: #fde047;
+  --pill-no: #4c1120;
+  --pill-no-ink: #fda4af;
+  --side: #07080c;
+  --side-card: #141622;
+  --side-ink: #e2e8f0;
+  --shadow: 4px 4px 0px #b8ff01;
+  --shadow-sm: 2px 2px 0px #383e56;
+  --shadow-lg: 6px 6px 0px #a855f7;
+  --bw: 2px;
+}
+
+[data-vibe="coquette"] {
+  --bg: #fff5f8;
+  --bg-dot: #f9d8e4;
+  --card: #ffffff;
+  --ink: #4a152b;
+  --mute: #965670;
+  --line: #4a152b;
+  --soft-line: #f6dae4;
+  --primary: #ff477e;
+  --primary-ink: #ffffff;
+  --lime: #ffc2d1;
+  --Purple: #c77dff;
+  --cyan: #a2d2ff;
+  --gold: #ffca3a;
+  --red: #ff1e56;
+  --teal: #38b000;
+  --pill-ok: #e0f8e9;
+  --pill-ok-ink: #1b6d39;
+  --pill-wait: #fff0c2;
+  --pill-wait-ink: #8f5b00;
+  --pill-no: #ffd6e0;
+  --pill-no-ink: #a4133c;
+  --side: #3b0d22;
+  --side-card: #591836;
+  --side-ink: #ffe5ec;
+  --shadow: 4px 4px 0px #ff85a1;
+  --shadow-sm: 2px 2px 0px #ff85a1;
+  --shadow-lg: 6px 6px 0px #4a152b;
+  --bw: 2px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: 'Noto Sans Thai', 'Prompt', system-ui, sans-serif;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--bg-dot) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  transition: background-color .2s, color .2s;
+}
+h1, h2, h3, .num, .font-head {
+  font-family: 'Prompt', 'Noto Sans Thai', system-ui, sans-serif;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+button, input, select { font: inherit; color: inherit; }
+
+/* Marquee Top Ticker */
+.ticker {
+  background: var(--lime);
+  color: #16161a;
+  border-bottom: var(--bw) solid var(--line);
+  font-family: 'Prompt', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-badges { display: flex; gap: 6px; align-items: center; }
+.vibe-btn {
+  border: 1.5px solid #16161a;
+  background: #fff;
+  color: #16161a;
+  border-radius: 99px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .12s;
+}
+.vibe-btn:hover { transform: translateY(-1px); }
+.vibe-btn.active { background: #16161a; color: #fff; }
+
+.app { display: flex; min-height: calc(100vh - 36px); }
+
+/* Sidebar */
+aside {
+  width: 270px;
+  background: var(--side);
+  color: var(--side-ink);
+  border-right: var(--bw) solid var(--line);
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-shrink: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px 14px;
+  border-bottom: 1px dashed rgba(255,255,255,0.18);
+}
+.logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--lime);
+  color: #16161a;
+  border: 2px solid #fff;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  box-shadow: 3px 3px 0px var(--primary);
+  transform: rotate(-4deg);
+}
+.brand b {
+  font-family: 'Prompt', sans-serif;
+  font-size: 19px;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.brand small {
+  display: inline-block;
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 99px;
+  margin-top: 2px;
+}
+
+.who {
+  background: var(--side-card);
+  border: 1.5px solid rgba(255,255,255,0.16);
+  border-radius: 16px;
+  padding: 12px;
+  font-size: 12px;
+}
+.who label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.who select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 2px solid var(--lime);
+  background: #0f111a;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+nav { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 2px solid transparent;
+  color: var(--side-ink);
+  padding: 11px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 600;
+  transition: all .15s ease;
+}
+nav button:hover {
+  background: var(--side-card);
+  transform: translateX(3px);
+}
+nav button.on {
+  background: var(--primary);
+  color: var(--primary-ink);
+  border-color: #fff;
+  box-shadow: 3px 3px 0px var(--lime);
+}
+nav .badge {
+  margin-left: auto;
+  background: var(--lime);
+  color: #16161a;
+  border: 1.5px solid #16161a;
+  border-radius: 99px;
+  font-size: 12px;
+  padding: 1px 9px;
+  font-weight: 800;
+}
+
+.side-footer {
+  margin-top: auto;
+  background: var(--side-card);
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 34px 70px;
+  max-width: 1240px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.head-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--lime);
+  color: #16161a;
+  border: 1.5px solid var(--line);
+  border-radius: 99px;
+  padding: 2px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  box-shadow: var(--shadow-sm);
+}
+.head h1 { font-size: 30px; line-height: 1.15; }
+.head p { margin: 4px 0 0; color: var(--mute); font-weight: 500; }
+
+/* Bento Stats */
+.grid { display: grid; gap: 16px; }
+.stats {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  margin-bottom: 24px;
+}
+.stat {
+  background: var(--card);
+  border: var(--bw) solid var(--line);
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s ease;
+}
+.stat:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
+.stat .sticker {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background: var(--lime);
+  color: #16161a;
+  transform: rotate(6deg);
+}
+.stat.b .sticker { background: var(--cyan); transform: rotate(-6deg); }
+.stat.r .sticker { background: #ffccd5; transform: rotate(8deg); }
+.stat.g .sticker { background: var(--gold); transform: rotate(-4deg); }
+.stat small {
+  color: var(--mute);
+  font-weight: 600;
+  font-size: 13px;
+  display: block;
+}
+.stat .num {
+  font-size: 34px;
+  display: block;
+  line-height: 1.15;
+  margin-top: 6px;
+}
+.stat .sub {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--soft-line);
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: var(--bw) solid var(--line);
+  border-radius: 22px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.card h2 { font-size: 19px; display: flex; align-items: center; gap: 8px; }
+
+/* Tables */
+.wrap { overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th {
+  text-align: left;
+  font-weight: 700;
+  color: var(--mute);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--line);
+  white-space: nowrap;
+}
+.tbl td {
+  padding: 12px;
+  border-bottom: 1px solid var(--soft-line);
+  vertical-align: middle;
+}
+.tbl tr:hover td { background: rgba(139, 92, 246, 0.04); }
+.tbl tr:last-child td { border-bottom: 0; }
+.r- { text-align: right; }
+
+.item-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.item-ico {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+/* Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid var(--line);
+  white-space: nowrap;
+  box-shadow: 1.5px 1.5px 0px var(--line);
+}
+.p-ok { background: var(--pill-ok); color: var(--pill-ok-ink); }
+.p-wait { background: var(--pill-wait); color: var(--pill-wait-ink); }
+.p-no { background: var(--pill-no); color: var(--pill-no-ink); }
+
+/* Buttons */
+.btn {
+  border: var(--bw) solid var(--line);
+  border-radius: 14px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-weight: 700;
+  background: var(--primary);
+  color: var(--primary-ink);
+  box-shadow: var(--shadow-sm);
+  transition: transform .12s ease, box-shadow .12s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow);
+}
+.btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+.btn.s { padding: 6px 13px; font-size: 13px; border-radius: 11px; }
+.btn.o { background: var(--card); color: var(--ink); }
+.btn.d { background: var(--red); color: #fff; }
+.btn.gold { background: var(--lime); color: #16161a; }
+
+/* Inputs & Filter Chips */
+input[type=text], input[type=number], input[type=search], select.f {
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: var(--bw) solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  width: 100%;
+  font-weight: 500;
+}
+input[type=number] { width: 96px; text-align: right; font-weight: 700; }
+input:focus, select:focus { outline: 3px solid var(--primary); outline-offset: 1px; }
+
+.tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.chip-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.chip {
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .12s;
+}
+.chip:hover { transform: translateY(-1px); }
+.chip.on {
+  background: var(--lime);
+  color: #16161a;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Progress Bar */
+.bar {
+  height: 12px;
+  border-radius: 99px;
+  background: var(--soft-line);
+  border: 1.5px solid var(--line);
+  overflow: hidden;
+  min-width: 90px;
+}
+.bar i { display: block; height: 100%; background: var(--teal); transition: width .3s; }
+.bar.low i { background: var(--red); }
+
+.cat {
+  font-family: 'Prompt', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px 12px !important;
+  background: var(--soft-line);
+  border-radius: 10px;
+}
+
+/* Flow Steps */
+.flow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 700;
+}
+.flow b {
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Modal & Toast */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 20, .65);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 50;
+}
+.box {
+  background: var(--card);
+  border: 3px solid var(--line);
+  border-radius: 24px;
+  padding: 24px;
+  width: min(580px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  box-shadow: 8px 8px 0px var(--primary);
+  animation: pop .18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes pop { from { transform: scale(.92) translateY(8px); opacity: 0; } }
+.row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  background: #16161a;
+  color: #fff;
+  border: 2px solid var(--lime);
+  padding: 12px 22px;
+  border-radius: 99px;
+  font-weight: 700;
+  z-index: 99;
+  box-shadow: 4px 4px 0px var(--primary);
+  animation: pop .2s ease;
+}
+.empty {
+  text-align: center;
+  color: var(--mute);
+  padding: 34px 12px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.low { color: var(--red); font-weight: 800; }
+
+/* Confetti Burst */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  z-index: 120;
+  font-size: 22px;
+  animation: fly 1s ease-out forwards;
+}
+@keyframes fly {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.4) rotate(260deg); opacity: 0; }
+}
+
+@media (max-width: 860px) {
+  .app { flex-direction: column; }
+  aside {
+    width: 100%;
+    height: auto;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .brand { border: 0; padding: 0; }
+  .brand span { display: none; }
+  .who { flex: 1; padding: 6px 10px; }
+  .who label { display: none; }
+  .who select { margin: 0; }
+  .side-footer { display: none; }
+  nav { flex-direction: row; overflow-x: auto; width: 100%; margin-top: 6px; }
+  nav button { white-space: nowrap; padding: 8px 12px; font-size: 13px; }
+  main { padding: 18px 14px 60px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  <div>⚡ <b>PAW LABZ INVENTORY OS</b> — ระบบคลังอาหารสัตว์ยุคใหม่ สต็อกเป๊ะ เบิกไว ไม่จกตา 🐾✨</div>
+  <div class="ticker-badges">
+    <span>VIBE:</span>
+    <button class="vibe-btn active" id="vb-pop" onclick="setVibe('pop')">✨ Y2K Pop</button>
+    <button class="vibe-btn" id="vb-coquette" onclick="setVibe('coquette')">🎀 Coquette</button>
+    <button class="vibe-btn" id="vb-cyber" onclick="setVibe('cyber')">👾 Cyber Neon</button>
+  </div>
+</div>
+
+<div class="app">
+  <aside>
+    <div class="brand">
+      <div class="logo">🐾</div>
+      <span>
+        <b>PAW LABZ</b><br>
+        <small>คลังตัวแม่ v2.5 ✨</small>
+      </span>
+    </div>
+    <div class="who">
+      <label for="role">🎭 สวมบทบาทเป็น (POV)</label>
+      <select id="role"></select>
+    </div>
+    <nav id="nav"></nav>
+    <div class="side-footer">
+      <div style="font-weight:700;color:#fff;margin-bottom:4px">💡 Pro Tip ฉบับตัวตึง</div>
+      สลับ POV ด้านบนเพื่อลองส่งใบเบิกจากสาขา แล้วสลับกลับมาคลังกลางเพื่อกดอนุมัติแบบสับ!
+    </div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<div id="layer"></div>
+
+<script>
+var BR = { C: 'คลังกลาง (HQ)', B1: 'สาขา 1 (สยาม)', B2: 'สาขา 2 (อารีย์)', B3: 'สาขา 3 (บางนา)' }, BK = ['B1', 'B2', 'B3'];
+var CATS = ['อาหารสุนัข', 'อาหารแมว', 'อาหารเสริม', 'อุปกรณ์'];
+var CAT_EMOJI = { 'อาหารสุนัข': '🐶', 'อาหารแมว': '🐱', 'อาหารเสริม': '💊', 'อุปกรณ์': '🧸' };
+
+function P(id, n, c, u, min, a, b, d, e, ico) {
+  return { id: id, name: n, cat: c, unit: u, min: min, ico: ico || '📦', stock: { C: a, B1: b, B2: d, B3: e } };
+}
+
+var SEED = {
+  products: [
+    P(1, 'อาหารสุนัขโต รสเนื้อวากิว 3 กก.', 'อาหารสุนัข', 'ถุง', 20, 120, 14, 10, 8, '🥩'),
+    P(2, 'อาหารลูกสุนัข นมแพะพรีเมียม 1.5 กก.', 'อาหารสุนัข', 'ถุง', 15, 60, 6, 9, 4, '🍼'),
+    P(3, 'อาหารเปียกสุนัข ซุปไก่ฉ่ำๆ 400 ก.', 'อาหารสุนัข', 'กระป๋อง', 50, 300, 40, 35, 22, '🥫'),
+    P(4, 'อาหารแมวโต ปลาทูทอดกรอบ 1 กก.', 'อาหารแมว', 'ถุง', 25, 12, 12, 18, 7, '🐟'),
+    P(5, 'อาหารลูกแมว แซลมอนนอร์เวย์ 400 ก.', 'อาหารแมว', 'ถุง', 20, 90, 10, 6, 12, '🍣'),
+    P(6, 'อาหารเปียกแงว เกรวี่ทูน่า 85 ก.', 'อาหารแมว', 'ซอง', 100, 640, 90, 120, 75, 'パウ'),
+    P(7, 'วิตามินบำรุงขนจึ้งๆ เงาตาแตก', 'อาหารเสริม', 'ขวด', 10, 40, 5, 4, 3, '✨'),
+    P(8, 'แคลเซียมบูสต์กระดูกน้องหมา', 'อาหารเสริม', 'กระปุก', 10, 8, 3, 5, 2, '🦴'),
+    P(9, 'ขนมขัดฟัน ลมหายใจหอมฟุ้ง', 'อาหารเสริม', 'ห่อ', 30, 150, 25, 20, 18, '🦷'),
+    P(10, 'สายจูงแฟชั่น Y2K สะท้อนแสง', 'อุปกรณ์', 'เส้น', 10, 35, 6, 5, 4, '🦮'),
+    P(11, 'ทรายแมวเต้าหู้ กลิ่นมัทฉะ 10 ลิตร', 'อุปกรณ์', 'ถุง', 20, 55, 9, 12, 6, '🍵'),
+    P(12, 'ชามอาหารสแตนเลส กันมดตัวตึง', 'อุปกรณ์', 'ใบ', 10, 48, 8, 7, 5, '🥣')
+  ],
+  reqs: [
+    { id: 1, br: 'B2', date: dt(-1), items: [{ pid: 4, q: 20 }, { pid: 8, q: 6 }], status: 'wait', note: 'ของใกล้ตุยแล้วแม่ ลูกค้าถามหาฉ่ำมากช่วงโปร 🔥' },
+    { id: 2, br: 'B3', date: dt(0), items: [{ pid: 1, q: 10 }, { pid: 11, q: 8 }], status: 'wait', note: 'ขอเติมด่วนจ้า ทาสแมวเหมาทรายมัทฉะเกลี้ยง!' }
+  ],
+  log: [],
+  nid: 3
+};
+SEED.products[5].ico = '🐱';
+
+function dt(d) { var x = new Date(); x.setDate(x.getDate() + d); return x.toISOString().slice(0, 10); }
+var S, role = 'C', tab = 'dash', q = '', cf = '', lowOnly = false;
+try { var raw = localStorage.getItem('petstock_genz1'); S = raw ? JSON.parse(raw) : null; } catch (e) { S = null; }
+if (!S) S = JSON.parse(JSON.stringify(SEED));
+
+function save() { try { localStorage.setItem('petstock_genz1', JSON.stringify(S)); } catch (e) {} }
+function $(i) { return document.getElementById(i); }
+function pr(id) { return S.products.find(function(p) { return p.id === id; }); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function fmt(d) { var a = d.split('-'); return a[2] + '/' + a[1] + '/' + (+a[0] + 543); }
+function st(s) {
+  return s === 'wait'
+    ? '<span class="pill p-wait">⏳ รออนุมัติ (ลุ้นอยู่)</span>'
+    : s === 'ok'
+    ? '<span class="pill p-ok">✅ อนุมัติฉ่ำ!</span>'
+    : '<span class="pill p-no">❌ ปัดตก/เท</span>';
+}
+
+function burstConfetti() {
+  var emojis = ['✨', '🐾', '💖', '🔥', '🎉', '🦴', '🐟'];
+  for (var i = 0; i < 16; i++) {
+    var el = document.createElement('div');
+    el.className = 'confetti';
+    el.textContent = emojis[i % emojis.length];
+    el.style.left = (window.innerWidth / 2 + (Math.random() * 80 - 40)) + 'px';
+    el.style.top = (window.innerHeight / 2) + 'px';
+    el.style.setProperty('--tx', (Math.random() * 360 - 180) + 'px');
+    el.style.setProperty('--ty', (Math.random() * -280 - 40) + 'px');
+    document.body.appendChild(el);
+    setTimeout((function(node) { return function() { node.remove(); }; })(el), 1000);
+  }
+}
+
+function toast(m) {
+  var t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = m;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 2600);
+}
+function modal(h) { $('layer').innerHTML = '<div class="modal" onclick="if(event.target===this)closeM()"><div class="box">' + h + '</div></div>'; }
+function closeM() { $('layer').innerHTML = ''; }
+function logit(t) { S.log.unshift({ t: new Date().toISOString(), m: t }); S.log = S.log.slice(0, 100); }
+function pending() { return S.reqs.filter(function(r) { return r.status === 'wait'; }).length; }
+
+function setVibe(v) {
+  document.documentElement.setAttribute('data-vibe', v);
+  ['pop', 'coquette', 'cyber'].forEach(function(k) {
+    var b = $('vb-' + k);
+    if (b) b.className = 'vibe-btn' + (k === v ? ' active' : '');
+  });
+}
+
+// ---------- navigation
+var TABS = {
+  C: [
+    ['dash', '🌈', 'แดชบอร์ดตัวแม่'],
+    ['stock', '📦', 'คลังกลาง (HQ)'],
+    ['reqs', '💌', 'คำขอเบิกเข้า'],
+    ['all', '🔥', 'ส่องสต็อกทุกสาขา'],
+    ['log', '📜', 'ไทม์ไลน์ประวัติ']
+  ],
+  B: [
+    ['dash', '🌈', 'แดชบอร์ดสาขา'],
+    ['new', '🛒', 'กดขอเบิกของด่วน'],
+    ['reqs', '💌', 'สถานะใบเบิกฉัน'],
+    ['stock', '📦', 'เช็กของในสาขา']
+  ]
+};
+
+function isC() { return role === 'C'; }
+
+function render() {
+  var sel = $('role');
+  if (!sel.options.length) {
+    sel.innerHTML = Object.keys(BR).map(function(k) {
+      return '<option value="' + k + '">' + (k === 'C' ? '👑 ' : '🏪 ') + BR[k] + (k === 'C' ? ' [ผู้อนุมัติ]' : '') + '</option>';
+    }).join('');
+    sel.onchange = function() { role = sel.value; tab = 'dash'; q = ''; cf = ''; lowOnly = false; render(); toast('สลับ POV เป็น ' + BR[role] + ' แล้ว ✨'); };
+  }
+  sel.value = role;
+  var tabs = isC() ? TABS.C : TABS.B;
+  $('nav').innerHTML = tabs.map(function(t) {
+    var b = t[0] === 'reqs' && isC() && pending() ? '<span class="badge">' + pending() + ' ด่วน!</span>' : '';
+    return '<button class="' + (tab === t[0] ? 'on' : '') + '" onclick="go(\'' + t[0] + '\')"><span>' + t[1] + '</span>' + t[2] + b + '</button>';
+  }).join('');
+  var v = { dash: dash, stock: stock, reqs: reqs, all: allStock, log: logv, 'new': newReq }[tab];
+  $('main').innerHTML = v();
+}
+
+function go(t) { tab = t; q = ''; cf = ''; lowOnly = false; render(); window.scrollTo(0, 0); }
+function setq(v) {
+  q = v;
+  var pos = document.activeElement && document.activeElement.selectionStart;
+  render();
+  var i = $('sq');
+  if (i) { i.focus(); try { i.setSelectionRange(pos, pos); } catch (e) {} }
+}
+function setcf(v) { cf = (cf === v ? '' : v); render(); }
+function toggleLow() { lowOnly = !lowOnly; render(); }
+
+// ---------- shared pieces
+function tools() {
+  var chips = '<div class="chip-bar">'
+    + '<button class="chip ' + (!cf && !lowOnly ? 'on' : '') + '" onclick="cf=\'\';lowOnly=false;render()">✨ ทั้งหมด</button>'
+    + CATS.map(function(c) {
+        return '<button class="chip ' + (cf === c ? 'on' : '') + '" onclick="setcf(\'' + c + '\')">' + CAT_EMOJI[c] + ' ' + c + '</button>';
+      }).join('')
+    + '<button class="chip ' + (lowOnly ? 'on' : '') + '" onclick="toggleLow()">🚨 ของใกล้ตุย</button>'
+    + '</div>';
+  return '<div class="tools"><input id="sq" type="search" placeholder="🔍 เสิร์ชหาของเจ้านาย เช่น วากิว, ทรายแมวมัทฉะ..." value="' + esc(q) + '" oninput="setq(this.value)"></div>' + chips;
+}
+
+function list() {
+  return S.products.filter(function(p) {
+    var matchCat = !cf || p.cat === cf;
+    var matchQ = !q || p.name.indexOf(q) > -1 || p.cat.indexOf(q) > -1;
+    var matchLow = !lowOnly || p.stock[role] <= p.min;
+    return matchCat && matchQ && matchLow;
+  });
+}
+
+function head(tag, t, s, act) {
+  return '<div class="head"><div><div class="head-tag">' + tag + '</div><h1>' + t + '</h1><p>' + s + '</p></div>' + (act || '') + '</div>';
+}
+
+function bar(p, k) {
+  var m = p.min * (k === 'C' ? 3 : 1.5);
+  var w = Math.min(100, Math.round(p.stock[k] / m * 100));
+  return '<div class="bar' + (p.stock[k] <= p.min ? ' low' : '') + '"><i style="width:' + w + '%"></i></div>';
+}
+
+// ---------- dashboard
+function dash() {
+  var k = role, low = S.products.filter(function(p) { return p.stock[k] <= p.min; });
+  var tot = S.products.reduce(function(a, p) { return a + p.stock[k]; }, 0);
+  var rs = isC() ? S.reqs : S.reqs.filter(function(r) { return r.br === role; });
+  var w = rs.filter(function(r) { return r.status === 'wait'; }).length;
+
+  var h = head(
+    isC() ? '👑 HQ COMMAND CENTER' : '🏪 BRANCH VIBES · ' + BR[role],
+    isC() ? 'ภาพรวมคลังกลางแบบสับ ✨' : 'อัปเดตสต็อก ' + BR[role] + ' 🐾',
+    isC() ? 'เช็กของเข้า-ออก อนุมัติไว สาขาไม่บ่น ลูกค้าแฮปปี้' : 'ของชิ้นไหนใกล้ตุย กดขอเบิกจากคลังกลางได้ทันทีไม่ต้องรอ',
+    isC() ? '<button class="btn gold" onclick="recvM()">⚡ รับของเข้าคลังด่วน</button>' : '<button class="btn" onclick="go(\'new\')">🛒 ขอเบิกของเข้าสาขา</button>'
+  );
+
+  h += '<div class="grid stats">'
+    + '<div class="stat"><div class="sticker">📦</div><small>ของในสต็อกรวม</small><span class="num">' + tot.toLocaleString() + '</span><span class="sub">ชิ้นพร้อมขายฉ่ำๆ</span></div>'
+    + '<div class="stat b"><div class="sticker">🐾</div><small>ไอเทมทั้งหมด</small><span class="num">' + S.products.length + '</span><span class="sub">SKU คัดมาแล้วว่าเริ่ด</span></div>'
+    + '<div class="stat r"><div class="sticker">🚨</div><small>ของใกล้ตุย (ต้องเติม!)</small><span class="num">' + low.length + '</span><span class="sub">' + (low.length ? 'รีบเติมด่วนแม่!' : 'รอดทุกชิ้น เริ่ด!') + '</span></div>'
+    + '<div class="stat g"><div class="sticker">💌</div><small>ใบเบิกรออนุมัติ</small><span class="num">' + w + '</span><span class="sub">' + (w ? 'รอเคาะอยู่จ้า 👀' : 'เคลียร์เกลี้ยง โล่งมาก') + '</span></div>'
+    + '</div>';
+
+  h += '<div class="card"><div class="card-title"><h2>⚡ เวิร์กโฟลว์เบิกของฉบับเข้าใจง่าย</h2></div>'
+    + '<div class="flow"><b>1. สาขากดสั่งเบิก 🛒</b><span>➜</span><b>2. คลังกลางส่องสต็อก 👀</b><span>➜</span><b>3. กดอนุมัติฉ่ำๆ ✅</b><span>➜</span><b>4. ตัดสต็อกออโต้ ทันที! 🚀</b></div></div>';
+
+  h += '<div class="card"><div class="card-title"><h2>🚨 ลิสต์ของใกล้ตุย ' + (isC() ? '(ต้องสั่งโรงงานเพิ่ม)' : '(กดเบิกด่วนก่อนของขาด!)') + '</h2>'
+    + (!isC() && low.length ? '<button class="btn s gold" onclick="autoFillLow()">⚡ เหมาใส่ตะกร้าเบิกอัตโนมัติ</button>' : '')
+    + '</div>';
+
+  if (!low.length) {
+    h += '<div class="empty">🎉 สต็อกแน่นเปรี๊ยะทุกรายการ ไม่มีของใกล้ตุยเลย เริ่ดเกิน!</div>';
+  } else {
+    h += '<div class="wrap"><table class="tbl"><tr><th>ไอเทม</th><th class="r-">เหลืออยู่</th><th class="r-">จุดต้องเติม (Min)</th><th>สถานะ</th></tr>'
+      + low.map(function(p) {
+          return '<tr><td><div class="item-cell"><div class="item-ico">' + p.ico + '</div><div><b>' + p.name + '</b><br><small style="color:var(--mute)">' + p.cat + '</small></div></div></td>'
+            + '<td class="r- low">' + p.stock[k] + ' ' + p.unit + '</td>'
+            + '<td class="r-">' + p.min + ' ' + p.unit + '</td>'
+            + '<td><span class="pill p-no">🔥 ใกล้ตุย</span></td></tr>';
+        }).join('') + '</table></div>';
+  }
+  h += '</div>';
+
+  if (isC() && w) {
+    h += '<div class="card"><div class="card-title"><h2>💌 ใบเบิกที่รอคลังกลางเคาะ (' + w + ')</h2></div>' + reqRows(S.reqs.filter(function(r) { return r.status === 'wait'; })) + '</div>';
+  }
+  return h;
+}
+
+function autoFillLow() {
+  var low = S.products.filter(function(p) { return p.stock[role] <= p.min; });
+  cart = {};
+  low.forEach(function(p) {
+    var need = Math.max(5, (p.min * 2) - p.stock[role]);
+    cart[p.id] = Math.min(need, p.stock.C);
+  });
+  tab = 'new';
+  render();
+  toast('⚡ ดึงรายการของใกล้ตุยใส่ใบเบิกให้แล้ว!');
+}
+
+// ---------- stock table
+function stock() {
+  var k = role;
+  var h = head(
+    isC() ? '📦 HQ STOCKROOM' : '📦 BRANCH STOCK',
+    isC() ? 'คลังแสงสินค้ากลาง (HQ)' : 'เช็กสต็อกประจำ ' + BR[role],
+    isC() ? 'เวลากดอนุมัติใบเบิก ระบบจะหักของจากหน้านี้ให้อัตโนมัติแบบไม่ต้องคิดเลขเอง' : 'ของที่คลังกลางอนุมัติแล้ว จะวิ่งเข้าหน้านี้ทันที!',
+    isC() ? '<button class="btn gold" onclick="recvM()">+ รับของเข้าคลังกลาง</button>' : ''
+  );
+  var rows = list().map(function(p) {
+    var lo = p.stock[k] <= p.min;
+    return '<tr><td><div class="item-cell"><div class="item-ico">' + p.ico + '</div><div><b>' + p.name + '</b><br><small style="color:var(--mute)">' + CAT_EMOJI[p.cat] + ' ' + p.cat + '</small></div></div></td>'
+      + '<td class="r- ' + (lo ? 'low' : '') + '" style="font-size:16px;font-weight:700">' + p.stock[k] + ' <small>' + p.unit + '</small></td>'
+      + '<td style="width:140px">' + bar(p, k) + '</td>'
+      + '<td>' + (lo ? '<span class="pill p-no">🚨 ต่ำกว่าเกณฑ์</span>' : '<span class="pill p-ok">✨ แน่นปึ้ก</span>') + '</td></tr>';
+  }).join('');
+  return h + '<div class="card">' + tools() + (rows ? '<div class="wrap"><table class="tbl"><tr><th>สินค้า</th><th class="r-">คงเหลือ</th><th>หลอดพลังสต็อก</th><th>สถานะ</th></tr>' + rows + '</table></div>' : '<div class="empty">🥹 ไม่เจอสินค้าที่ค้นหาเลย ลองเปลี่ยนคำดูนะ</div>') + '</div>';
+}
+
+function allStock() {
+  var rows = list().map(function(p) {
+    return '<tr><td><div class="item-cell"><div class="item-ico">' + p.ico + '</div><div><b>' + p.name + '</b><br><small style="color:var(--mute)">Min: ' + p.min + ' ' + p.unit + '</small></div></div></td>'
+      + ['C'].concat(BK).map(function(k) {
+          return '<td class="r- ' + (p.stock[k] <= p.min ? 'low' : '') + '">' + p.stock[k] + '</td>';
+        }).join('')
+      + '<td class="r-" style="font-weight:800">' + ['C'].concat(BK).reduce(function(a, k) { return a + p.stock[k]; }, 0) + '</td></tr>';
+  }).join('');
+  return head('🔥 ALL-BRANCH RADAR', 'ส่องสต็อกทุกสาขาแบบเรียลไทม์', 'ตัวเลขสีแดง = ต่ำกว่าเกณฑ์ต้องเติมด่วน!')
+    + '<div class="card">' + tools() + '<div class="wrap"><table class="tbl"><tr><th>สินค้า</th><th class="r-">👑 คลังกลาง</th><th class="r-">สาขา 1</th><th class="r-">สาขา 2</th><th class="r-">สาขา 3</th><th class="r-">รวมตึง</th></tr>' + rows + '</table></div></div>';
+}
+
+// ---------- receive stock into central
+function recvM() {
+  modal('<h2>📦 รับของเข้าคลังกลางแบบสับ!</h2><p style="color:var(--mute)">เติมของจากซัพพลายเออร์เข้าคลังกลางปุ๊บ พร้อมจ่ายให้สาขาปั๊บ</p>'
+    + '<label style="font-weight:700">เลือกไอเทม<select id="rp" class="f" style="margin-top:6px">' + S.products.map(function(p) { return '<option value="' + p.id + '">' + p.ico + ' ' + p.name + ' (มีอยู่ ' + p.stock.C + ' ' + p.unit + ')</option>'; }).join('') + '</select></label><br><br>'
+    + '<label style="font-weight:700">จำนวนที่รับเข้า<br><input id="rq" type="number" min="1" value="20" style="margin-top:6px;width:140px"></label>'
+    + '<div class="row"><button class="btn o" onclick="closeM()">ไว้ก่อน</button><button class="btn gold" onclick="recv()">✨ ยืนยันรับของเข้าคลัง</button></div>');
+}
+function recv() {
+  var p = pr(+$('rp').value), n = parseInt($('rq').value, 10);
+  if (!(n > 0)) { toast('⚠️ กรอกจำนวนดีๆ ก่อนแม๊!'); return; }
+  p.stock.C += n;
+  logit('📦 รับเข้าคลังกลาง: ' + p.name + ' +' + n + ' ' + p.unit);
+  save(); closeM(); burstConfetti(); toast('🎉 เติมสต็อก +' + n + ' ' + p.unit + ' เรียบร้อย!'); render();
+}
+
+// ---------- branch: create request
+var cart = {};
+function newReq() {
+  var h = head('🛒 QUICK REQUISITION', 'กดขอเบิกของเข้า ' + BR[role], 'เลือกจำนวนที่อยากได้ แล้วกดส่งใบเบิกให้คลังกลางเคาะได้เลย!', '<button class="btn o s" onclick="autoFillLow()">⚡ เติมของใกล้ตุยให้ออโต้</button>');
+  h += '<div class="card">' + tools();
+  var ps = list();
+  if (!ps.length) h += '<div class="empty">🥹 ไม่พบสินค้าที่ค้นหา</div>';
+  else {
+    h += '<div class="wrap"><table class="tbl"><tr><th>สินค้า</th><th class="r-">สาขาเรามี</th><th class="r-">คลังกลางมี</th><th class="r-">จำนวนที่ขอเบิก</th></tr>';
+    CATS.forEach(function(c) {
+      var g = ps.filter(function(p) { return p.cat === c; });
+      if (!g.length) return;
+      h += '<tr><td colspan="4" class="cat">' + CAT_EMOJI[c] + ' หมวด' + c + '</td></tr>' + g.map(function(p) {
+        return '<tr><td><div class="item-cell"><div class="item-ico">' + p.ico + '</div><div><b>' + p.name + '</b></div></div></td>'
+          + '<td class="r- ' + (p.stock[role] <= p.min ? 'low' : '') + '">' + p.stock[role] + '</td>'
+          + '<td class="r-">' + p.stock.C + '</td>'
+          + '<td class="r-"><input type="number" min="0" value="' + (cart[p.id] || '') + '" placeholder="0" oninput="cart[' + p.id + ']=parseInt(this.value,10)||0;cc()"> <small>' + p.unit + '</small></td></tr>';
+      }).join('');
+    });
+    h += '</table></div>';
+  }
+  h += '<div class="row" style="align-items:center;border-top:2px dashed var(--soft-line);padding-top:14px"><span id="cn" style="font-weight:700;margin-right:auto">' + cartTxt() + '</span><button class="btn o" onclick="cart={};render()">ล้างตะกร้า</button><button class="btn" onclick="sendM()">🚀 ส่งใบเบิกให้คลังกลาง</button></div></div>';
+  return h;
+}
+function cartN() { return Object.keys(cart).filter(function(k) { return cart[k] > 0; }); }
+function cartTxt() { var n = cartN(); return n.length ? '🛍️ เลือกไว้แล้ว ' + n.length + ' รายการ พร้อมส่ง!' : '✨ ยังไม่ได้จิ้มเลือกสินค้าเลย'; }
+function cc() { $('cn').textContent = cartTxt(); }
+function sendM() {
+  if (!cartN().length) { toast('⚠️ จิ้มเลือกจำนวนสินค้าอย่างน้อย 1 ชิ้นก่อนน้า!'); return; }
+  modal('<h2>💌 ยืนยันส่งใบเบิกของ?</h2><div class="wrap"><table class="tbl">' + cartN().map(function(k) {
+    var p = pr(+k);
+    return '<tr><td>' + p.ico + ' ' + p.name + '</td><td class="r-" style="font-weight:800">' + cart[k] + ' ' + p.unit + '</td></tr>';
+  }).join('') + '</table></div><br><label style="font-weight:700">โน้ตฝากบอกคลังกลาง 💬<input id="nt" type="text" style="margin-top:6px" placeholder="เช่น ของหมดเชลฟ์แล้วแม่ ขอไวๆ พลีสสส 🔥"></label>'
+    + '<div class="row"><button class="btn o" onclick="closeM()">แก้แป๊บ</button><button class="btn" onclick="sendReq()">🚀 กดส่งใบเบิกเลย!</button></div>');
+}
+function sendReq() {
+  var items = cartN().map(function(k) { return { pid: +k, q: cart[k] }; });
+  S.reqs.unshift({ id: S.nid++, br: role, date: dt(0), items: items, status: 'wait', note: $('nt').value });
+  logit('💌 ' + BR[role] + ' ส่งใบเบิก ' + items.length + ' รายการ');
+  cart = {}; save(); closeM(); burstConfetti(); toast('🚀 ส่งใบเบิกแล้ว! รอคลังกลางเคาะอนุมัติ'); tab = 'reqs'; render();
+}
+
+// ---------- requests list
+function reqRows(rs) {
+  if (!rs.length) return '<div class="empty">✨ ยังไม่มีรายการใบเบิกเลยจ้า</div>';
+  return '<div class="wrap"><table class="tbl"><tr><th>เลขใบเบิก</th><th>วันที่</th>' + (isC() ? '<th>จากสาขา</th>' : '') + '<th>จำนวน</th><th>สถานะ</th><th>หมายเหตุ</th><th></th></tr>' + rs.map(function(r) {
+    return '<tr><td><b>#' + String(r.id).padStart(4, '0') + '</b></td><td>' + fmt(r.date) + '</td>' + (isC() ? '<td><b>' + BR[r.br] + '</b></td>' : '') + '<td>' + r.items.length + ' รายการ</td><td>' + st(r.status) + '</td><td style="color:var(--mute);max-width:200px">' + (r.note ? esc(r.note) : '-') + '</td><td class="r-"><button class="btn s ' + (isC() && r.status === 'wait' ? 'gold' : 'o') + '" onclick="viewReq(' + r.id + ')">' + (isC() && r.status === 'wait' ? '⚡ พิจารณาด่วน' : '👀 ส่องรายละเอียด') + '</button></td></tr>';
+  }).join('') + '</table></div>';
+}
+function reqs() {
+  var rs = isC() ? S.reqs : S.reqs.filter(function(r) { return r.br === role; });
+  return head(
+    '💌 REQUISITION HUB',
+    isC() ? 'กล่องใบเบิกจากทุกสาขา' : 'ใบเบิกของฉัน (' + BR[role] + ')',
+    isC() ? 'กดอนุมัติปุ๊บ ตัดสต็อกคลังกลาง + เติมเข้าสาขาให้ออโต้แบบสับ!' : 'เช็กสถานะใบเบิกที่ส่งไปหาคลังกลางแบบเรียลไทม์',
+    isC() ? '' : '<button class="btn" onclick="go(\'new\')">+ สร้างใบเบิกใหม่</button>'
+  ) + '<div class="card">' + reqRows(rs) + '</div>';
+}
+
+function viewReq(id) {
+  var r = S.reqs.find(function(x) { return x.id === id; }), w = r.status === 'wait' && isC();
+  var h = '<h2>ใบเบิก #' + String(r.id).padStart(4, '0') + ' ' + st(r.status) + '</h2>'
+    + '<p style="color:var(--mute);font-weight:600">📍 ' + BR[r.br] + ' · 📅 ' + fmt(r.date) + (r.note ? '<br>💬 โน้ตจากสาขา: "' + esc(r.note) + '"' : '') + '</p>';
+  h += '<div class="wrap"><table class="tbl"><tr><th>สินค้า</th><th class="r-">ขอเบิก</th>' + (w ? '<th class="r-">คลังกลางมี</th><th class="r-">เคาะอนุมัติ</th>' : '<th class="r-">ได้จริง</th>') + '</tr>'
+    + r.items.map(function(i, n) {
+        var p = pr(i.pid);
+        return '<tr><td>' + p.ico + ' <b>' + p.name + '</b></td><td class="r-">' + i.q + ' ' + p.unit + '</td>'
+          + (w ? '<td class="r- ' + (p.stock.C < i.q ? 'low' : '') + '">' + p.stock.C + '</td><td class="r-"><input type="number" min="0" max="' + Math.min(i.q, p.stock.C) + '" value="' + Math.min(i.q, p.stock.C) + '" id="ap' + n + '"></td>'
+               : '<td class="r-" style="font-weight:800">' + (r.status === 'ok' ? (i.a != null ? i.a : i.q) + ' ' + p.unit : '-') + '</td>') + '</tr>';
+      }).join('') + '</table></div>';
+  h += '<div class="row">' + (w ? '<button class="btn o" onclick="closeM()">ปิด</button><button class="btn d" onclick="decide(' + id + ',false)">❌ ปัดตก (ไม่อนุมัติ)</button><button class="btn gold" onclick="decide(' + id + ',true)">✅ อนุมัติฉ่ำ & ตัดสต็อกเลย!</button>' : '<button class="btn o" onclick="closeM()">ปิดหน้าต่าง</button>') + '</div>';
+  modal(h);
+}
+
+function decide(id, ok) {
+  var r = S.reqs.find(function(x) { return x.id === id; });
+  if (!ok) {
+    r.status = 'no';
+    logit('❌ ปัดตกใบเบิก #' + r.id + ' ของ ' + BR[r.br]);
+    save(); closeM(); toast('บันทึกปัดตกใบเบิกแล้ว'); render(); return;
+  }
+  var a = r.items.map(function(i, n) { var v = parseInt($('ap' + n).value, 10); return isNaN(v) ? 0 : v; });
+  for (var n = 0; n < a.length; n++) {
+    var p = pr(r.items[n].pid);
+    if (a[n] < 0 || a[n] > r.items[n].q) { toast('⚠️ อนุมัติเกินจำนวนที่สาขาขอ: ' + p.name); return; }
+    if (a[n] > p.stock.C) { toast('🚨 ของในคลังกลางไม่พอจ่าย: ' + p.name); return; }
+  }
+  if (!a.some(function(v) { return v > 0; })) { toast('⚠️ ถ้าอนุมัติเป็น 0 หมด กดปุ่ม "ปัดตก" แทนได้เลยจ้า'); return; }
+  r.items.forEach(function(i, n) {
+    var p = pr(i.pid);
+    i.a = a[n];
+    p.stock.C -= a[n];
+    p.stock[r.br] += a[n];
+  });
+  r.status = 'ok';
+  logit('✅ อนุมัติใบเบิก #' + r.id + ' ให้ ' + BR[r.br] + ' (ตัดสต็อกออโต้แล้ว)');
+  save(); closeM(); burstConfetti(); toast('🎉 อนุมัติฉ่ำ! ตัดสต็อกคลังกลางส่งเข้าสาขาเรียบร้อย'); render();
+}
+
+// ---------- log
+function logv() {
+  return head('📜 ACTIVITY TIMELINE', 'ไทม์ไลน์ประวัติแบบเรียลไทม์', 'บันทึกครบทุกมูฟเมนต์ ใครเบิก ใครเคาะ ใครเติมของ เช็กได้หมด', '<button class="btn o" onclick="resetAll()">🔄 รีเซ็ตข้อมูลกลับค่าเริ่มต้น</button>')
+    + '<div class="card">' + (S.log.length ? '<table class="tbl">' + S.log.map(function(l) {
+        var d = new Date(l.t);
+        return '<tr><td style="white-space:nowrap;color:var(--mute);font-weight:600">' + d.toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'short' }) + '</td><td style="font-weight:600">' + esc(l.m) + '</td></tr>';
+      }).join('') + '</table>' : '<div class="empty">✨ ยังไม่มีประวัติใหม่ ลองกดรับของเข้าคลังหรืออนุมัติใบเบิกดูสิ!</div>') + '</div>';
+}
+
+function resetAll() {
+  modal('<h2>🔄 รีเซ็ตข้อมูลทั้งหมด?</h2><p>ข้อมูลสต็อกและใบเบิกจะกลับไปเป็นข้อมูลตัวอย่างเริ่มต้นทั้งหมดเลยนะ</p><div class="row"><button class="btn o" onclick="closeM()">ยกเลิก</button><button class="btn d" onclick="S=JSON.parse(JSON.stringify(SEED));save();closeM();toast(\'✨ รีเซ็ตข้อมูลใหม่เอี่ยมแล้ว!\');render()">ยืนยันรีเซ็ต</button></div>');
+}
+
+render();
+</script>
+</body>
+</html>
